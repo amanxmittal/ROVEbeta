@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "543297249548",
+    "firebase_url": "https://rove-80dea.firebaseio.com",
+    "project_id": "rove-80dea",
+    "storage_bucket": "rove-80dea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543297249548:android:47269c89eba43875",
+        "android_client_info": {
+          "package_name": "com.me.sam.rove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543297249548-4gaucftuuftk8itj1u3c8bnuh0bvvuam.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.me.sam.rove",
+            "certificate_hash": "5907b0b0ea756407ea409cd143e5f797e7ac5043"
+          }
+        },
+        {
+          "client_id": "543297249548-nv1qbt3vbsqbap0n64j7eeicrp68i5ko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1KRi8PG9DJWw1f_5zqmzpp32nykREcxc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543297249548-nv1qbt3vbsqbap0n64j7eeicrp68i5ko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

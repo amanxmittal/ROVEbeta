@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/AppTheme">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/share"
+            android:icon="@drawable/share"
+            android:title="Share" />
+        <item
+            android:id="@+id/feedback"
+            android:icon="@drawable/feedback"
+            android:title="Feedback" />
+        <item
+            android:id="@+id/rateus"
+            android:icon="@drawable/rateus"
+            android:title="rateus" />
+        <item
+            android:id="@+id/developers"
+            android:icon="@drawable/team"
+            android:title="Developers" />
+    </group>
+
+
+</menu>

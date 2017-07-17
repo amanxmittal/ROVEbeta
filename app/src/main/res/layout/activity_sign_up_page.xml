@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/buttonGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/buttonRegisterAM"
+        android:layout_alignLeft="@+id/buttonRegisterAM"
+        android:layout_alignRight="@+id/buttonRegisterAM"
+        android:layout_alignStart="@+id/buttonRegisterAM"
+        android:layout_below="@+id/textView"
+        android:background="#00000000"
+        android:text="google" />
+
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--or--"
+        android:textAlignment="center"
+        android:layout_below="@+id/buttonRegisterAM"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/buttonRegisterAM"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/editTextPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:background="#00000000"
+        android:text="Register" />
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="103dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/editTextUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="73dp"
+        android:ems="10"
+        android:hint="User Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editTextEmailId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextUserName"
+        android:layout_marginTop="11dp"
+        android:ems="10"
+        android:hint="Email ID"
+        android:inputType="textEmailAddress"
+        android:layout_alignLeft="@+id/editTextUserName"
+        android:layout_alignStart="@+id/editTextUserName" />
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_below="@+id/editTextEmailId"
+        android:layout_alignRight="@+id/editTextEmailId"
+        android:layout_alignEnd="@+id/editTextEmailId"
+        android:layout_alignLeft="@+id/editTextEmailId"
+        android:layout_alignStart="@+id/editTextEmailId" />
+
+</RelativeLayout>
