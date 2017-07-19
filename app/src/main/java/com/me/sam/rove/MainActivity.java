@@ -105,9 +105,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStart() {
-        super.onStart();
+
         mAuth.addAuthStateListener(mAuthListener);
+        super.onStart();
     }
 
+    @Override
+    protected void onStop() {
 
+        mAuth.removeAuthStateListener(mAuthListener);
+        super.onStop();
+    }
 }
