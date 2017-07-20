@@ -1,6 +1,7 @@
 package com.me.sam.rove;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -26,6 +32,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.ByteArrayOutputStream;
+
+import static android.R.drawable.ic_menu_edit;
 
 
 public class Profile extends Fragment {
@@ -37,7 +45,11 @@ public class Profile extends Fragment {
     private Boolean editBool = false;
     private ImageView profilePic;
     private ImageButton b;
+    private String uid;
+    private ProgressDialog mRegProgress;
 
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     private StorageReference mStorage;
 
     private static final int CAMERA_REQUEST = 1;
@@ -73,14 +85,37 @@ public class Profile extends Fragment {
         btnGallery =(Button) view.findViewById(R.id.btnGallery);
         b = (ImageButton) view.findViewById(R.id.logOut);
 
-
+        mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mRegProgress = new ProgressDialog(getActivity());
 
 
         etUserName.setVisibility(View.GONE);
         etTravellingWith.setVisibility(View.GONE);
         btnCamera.setVisibility(View.GONE);
         btnGallery.setVisibility(View.GONE);
+
+
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        mDatabase.child("Users").child(user.getUid()).child("UserName").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tvUserName.setText(dataSnapshot.getValue().toString());
+                etUserName.setText(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
 
 
         b.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +142,14 @@ public class Profile extends Fragment {
                     etTravellingWith.setVisibility(View.GONE);
                     btnCamera.setVisibility(View.GONE);
                     btnGallery.setVisibility(View.GONE);
+
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    mDatabase.child("Users").child(user.getUid()).child("UserName").setValue(etUserName.getText().toString().trim());
+                    tvUserName.setText(etUserName.getText().toString().trim());
+
+                    edit.setImageResource(R.drawable.edit);
+
+
 
                 }else{
 
@@ -154,38 +197,28 @@ public class Profile extends Fragment {
 
             // uri = data.getData();
 
+            //Toast.makeText(getActivity(),data.getExtras().get("data")+"",Toast.LENGTH_LONG).show();
 
-            Toast.makeText(getActivity(),data.getExtras().get("data")+"",Toast.LENGTH_LONG).show();
+            mRegProgress.setMessage("Please wait till profile picture updates");
 
-            /*StorageReference filePath = mStorage;
+            mRegProgress.setCanceledOnTouchOutside(false);
+            mRegProgress.show();
 
-            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //Toast.makeText(profile.this,"uploading done",Toast.LENGTH_LONG).show();
-
-                }
-            });*/
-
-
-
-            //profilePic.setImageURI(uri);
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             profilePic.setImageBitmap(photo);
             Uri uri = getImageUri(getActivity(), photo);
-            Toast.makeText(getActivity(),uri+"",Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(),uri+"",Toast.LENGTH_LONG).show();
 
+            FirebaseUser user = mAuth.getCurrentUser();
+            uid = user.getUid();
 
-
-
-
-
-            //Uri uri = data.getData();
-            StorageReference filePath = mStorage.child("photo").child("uid").child(uri.getLastPathSegment());
+            StorageReference filePath = mStorage.child("UserProfilePhoto").child(uid);
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //Toast.makeText(getActivity().this,"succefully updated",Toast.LENGTH_LONG).show();
+                    mRegProgress.dismiss();
+
+                    //Toast.makeText(getActivity(),"succefully updated",Toast.LENGTH_LONG).show();
 
                 }
             });
@@ -193,12 +226,21 @@ public class Profile extends Fragment {
 
         }else if (requestCode == GALLERY_REQUEST && resultCode == Activity.RESULT_OK){
 
+            mRegProgress.setMessage("Please wait till profile picture updates");
+
+            mRegProgress.setCanceledOnTouchOutside(false);
+            mRegProgress.show();
+
             Uri uri = data.getData();
-            StorageReference filePath = mStorage.child("photo").child("uid").child(uri.getLastPathSegment());
+            FirebaseUser user = mAuth.getCurrentUser();
+            uid = user.getUid();
+            StorageReference filePath = mStorage.child("UserProfilePhoto").child(uid);
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //Toast.makeText(profile.this,"succefully updated",Toast.LENGTH_LONG).show();
+                    mRegProgress.dismiss();
+
+                    //Toast.makeText(getActivity(),"succefully updated",Toast.LENGTH_LONG).show();
 
                 }
             });

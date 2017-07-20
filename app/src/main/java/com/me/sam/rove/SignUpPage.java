@@ -41,8 +41,8 @@ public class SignUpPage extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
 
-    private FirebaseAuth mAuth, firebaseAuth;
-    //private final static  int RC_SIGN_IN = 2;
+    private FirebaseAuth mAuth;
+
     //private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
@@ -51,7 +51,7 @@ public class SignUpPage extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up_page);
 
         mAuth = FirebaseAuth.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
+
 
         b1 = (Button) findViewById(R.id.buttonRegisterAM);
         b2 = (Button) findViewById(R.id.buttonGoogle);
@@ -162,10 +162,10 @@ public class SignUpPage extends AppCompatActivity {
 
                             mRegProgress.dismiss();
 
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            FirebaseUser user = mAuth.getCurrentUser();
                             uid = user.getUid();
 
-                           // mDatabase.child("Users").child(uid).child("UserName").setValue(userName);
+                           mDatabase.child("Users").child(uid).child("UserName").setValue(userName);
 
                             Toast.makeText(SignUpPage.this,"user is registered", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(SignUpPage.this,MainActivity.class));
@@ -216,10 +216,10 @@ public class SignUpPage extends AppCompatActivity {
                     Log.d("TAG", "signInWithCredential:success");
                     FirebaseUser user = mAuth.getCurrentUser();
                     uid = user.getUid();
-                    String userName = user.getEmail();
-
-
-                    //mDatabase.child("Users").child(uid).child("UserName").setValue(userName);
+                    String userName;
+                    String emailRetreive = user.getEmail();
+                    userName = usernameExractor(emailRetreive);
+                    mDatabase.child("Users").child(uid).child("UserName").setValue(userName);
                     //updateUI(user);
                 } else {
                     // If sign in fails, display a message to the user.
@@ -231,5 +231,19 @@ public class SignUpPage extends AppCompatActivity {
                 // ...
             }
         });
+    }
+
+    private String usernameExractor(String emailRetreive) {
+
+        String ch="";
+        int i;
+        for (i=0;i<emailRetreive.length();i++){
+            if(emailRetreive.charAt(i)!='@'){
+                ch = ch + emailRetreive.charAt(i);
+
+            }else
+                break;
+        }
+        return  ch;
     }
 }

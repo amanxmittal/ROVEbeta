@@ -30,7 +30,7 @@ public class LogInPage extends AppCompatActivity {
 
     private EditText et1,et2;
     private Button b1,b2;
-    Button b3;
+    private Button b3, b4;
     private ProgressDialog mLoginProgress;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
@@ -58,6 +58,7 @@ public class LogInPage extends AppCompatActivity {
         b1 = (Button) findViewById(R.id.buttonForgotPasswordAM);
         b2 = (Button) findViewById(R.id.buttonSignInAM);
         b3 = (Button) findViewById(R.id.buttonGoogleSignInAM);
+        b4 = (Button) findViewById(R.id.buttonRegisterAM);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -123,6 +124,15 @@ public class LogInPage extends AppCompatActivity {
                 // ...
             }
         };
+
+
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent registerIntent = new Intent(LogInPage.this,SignUpPage.class);
+                startActivity(registerIntent);
+            }
+        });
 
 
 
@@ -203,12 +213,7 @@ public class LogInPage extends AppCompatActivity {
     }
 
 
-    public void signUpIntend (View v)
-    {
-        Intent i = new Intent(LogInPage.this,SignUpPage.class);
-        startActivity(i);
 
-    }
     public void skip (View v)
     {
         Intent i = new Intent(LogInPage.this,MainActivity.class);
